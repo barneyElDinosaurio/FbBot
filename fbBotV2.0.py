@@ -5,12 +5,14 @@ import random
 import getpass
 import os
 import keyboard
+import json
+from pprint import pprint
 
 while True:
 	userEmail = "marioalzatelopez@gmail.com"#input("Please enter email.\n")
 	userPass ="Mario4406859"#getpass.getpass("Please enter password.\n")
 	userTarget = "jairocardonaea"#input("Please enter Facebook username of the user you wish to target.\n")
-	userQuantity = 2#input("Please enter how many messages you wish to send.\n")
+	userQuantity = 5#input("Please enter how many users you wish to send.\n")
 	userTimeInterval = 2#input("Please enter time (seconds) between each message. \n")
 	userMessageType = "single"#input("Please enter message type ['single' or 'multiple', without quotes]. \n")
 	if userMessageType == 'single':
@@ -49,36 +51,44 @@ while True:
 
 
 if operation:
-	print ("Initializing...")
-	options = webdriver.ChromeOptions()
-	prefs = {"profile.default_content_setting_values.notifications" : 2}
-	options.add_experimental_option("prefs", prefs)
-	options.add_argument("start-maximized")
-	browser = webdriver.Chrome("C:/webdrivers/chromedriver.exe",chrome_options=options)
-	browser.maximize_window()
 
-	print ("Operation in progress.")
+        #getting friends
+        print("reading friend list")
+        with open('friends.json') as f:
+                data = json.load(f)
+        print ("Friends readed,Initializing Bot . . .")
+        
 
-	browser.get('http://www.facebook.com')
-	emailElem = browser.find_element_by_id("email")
-	emailElem.send_keys(userEmail)
-	passElem = browser.find_element_by_id("pass")
-	passElem.send_keys(userPass)
-	passElem.send_keys(Keys.RETURN)
-	userTargetUrl = "http://www.facebook.com/messages/t/" + userTarget
-	browser.get(userTargetUrl)
-	#data = open('script.txt', 'r').read()
+
+        options = webdriver.ChromeOptions()
+        prefs = {"profile.default_content_setting_values.notifications" : 2}
+        options.add_experimental_option("prefs", prefs)
+        options.add_argument("start-maximized")
+        browser = webdriver.Chrome("C:/webdrivers/chromedriver.exe",chrome_options=options)
+        browser.maximize_window()
+
+        print ("Operation in progress.")
+
+        browser.get('http://www.facebook.com')
+        emailElem = browser.find_element_by_id("email")
+        emailElem.send_keys(userEmail)
+        passElem = browser.find_element_by_id("pass")
+        passElem.send_keys(userPass)
+        passElem.send_keys(Keys.RETURN)
+        userTargetUrl = "http://www.facebook.com/messages/t/"
+        browser.get(userTargetUrl)
+        #data = open('script.txt', 'r').read()
         #textAreaElem = browser.find_element_by_css_selector("div textarea.uiTextareaNoResize")
-	for i in range(userQuantity):
-		thisMessage = random.choice(userMessages)
-		inputsaso = browser.find_element_by_xpath("//input[contains(@placeholder,'Buscar en Messenger')]")
-		inputsaso.send_keys("Luisa Ortiz")
-		inputsaso.send_keys(Keys.RETURN)
-		time.sleep(2)
-		keyboard.write(thisMessage)
-		keyboard.send('enter')
-		#os.system("C:/Users/mario/Documents/FbBot/kyes.ahk")
-		#textAreaElem.send_keys(thisMessage)
-		#textAreaElem.send_keys(Keys.RETURN)
-		time.sleep(userTimeInterval)
-	print ("Operation successful.")
+        for i in range(userQuantity):
+                #thisMessage = random.choice(userMessages)
+                inputsaso = browser.find_element_by_xpath("//input[contains(@placeholder,'Buscar en Messenger')]")
+                inputsaso.send_keys(data["friends"][i]["name"])
+                keyboard.send('enter')
+                time.sleep(2)
+                keyboard.write("FB tEST")
+                keyboard.send('enter')
+                #os.system("C:/Users/mario/Documents/FbBot/kyes.ahk")
+                #textAreaElem.send_keys(thisMessage)
+                #textAreaElem.send_keys(Keys.RETURN)
+                time.sleep(userTimeInterval)
+        print ("Operation successful.")
