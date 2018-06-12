@@ -9,6 +9,7 @@ This is a facebook messenger bot with selenium and keyboard modules in Python
 * keyboard
 #### Others
 * google chrome driver
+* json file with friends list downloaded directly from your facebook profile
 
 
 ## License
