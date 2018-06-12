@@ -3,21 +3,18 @@ from selenium.webdriver.common.keys import Keys
 import sched, time, timeit
 import random
 import getpass
-import os
 import keyboard
 import json
 from pprint import pprint
-import html
-from unidecode import unidecode
-from django.utils import encoding
 
 
 while True:
-	userEmail = "marioalzatelopez@gmail.com"#input("Please enter email.\n")
-	userPass ="Mario4406859"#getpass.getpass("Please enter password.\n")
-	userTarget = "jairocardonaea"#input("Please enter Facebook username of the user you wish to target.\n")
-	userQuantity = 25#input("Please enter how many users you wish to send.\n")
-	userTimeInterval = 2#input("Please enter time (seconds) between each message. \n")
+	userEmail = input("Please enter email.\n")
+	userPass = getpass.getpass("Please enter password.\n")
+	userQuantity = input("Please enter how many users you wish to send.\n")
+	userQuantity = int(userQuantity)
+	userTimeInterval = input("Please enter time (seconds) between each message. \n")
+	userTimeInterval = int(userTimeInterval)
 	userMessageType = "single"#input("Please enter message type ['single' or 'multiple', without quotes]. \n")
 	if userMessageType == 'single':
 		userMessageQuantity = 1
@@ -54,13 +51,13 @@ while True:
 
 if operation:
 
-        #getting friends
+        #getting friends from fb json
         print("reading friend list")
         with open('friendsin.json','rb') as f:
                 data = json.load(f)
         print ("Friends readed,Initializing Bot . . .")
-        print (data["friends"][4]["name"])               
         
+        #webdriver
         options = webdriver.ChromeOptions()
         prefs = {"profile.default_content_setting_values.notifications" : 2}
         options.add_experimental_option("prefs", prefs)
@@ -68,7 +65,7 @@ if operation:
         browser = webdriver.Chrome("C:/webdrivers/chromedriver.exe",chrome_options=options)
         browser.maximize_window()
 
-        print ("Operation in progress.")
+        print ("Operation in progress. . .")
 
         browser.get('http://www.facebook.com')
         emailElem = browser.find_element_by_id("email")
@@ -76,10 +73,10 @@ if operation:
         passElem = browser.find_element_by_id("pass")
         passElem.send_keys(userPass)
         passElem.send_keys(Keys.RETURN)
+        #checking facebook login
         userTargetUrl = "http://www.facebook.com/messages/t/"
         browser.get(userTargetUrl)
-        #data = open('script.txt', 'r').read()
-        #textAreaElem = browser.find_element_by_css_selector("div textarea.uiTextareaNoResize")
+        #iterate users
         for i in range(userQuantity):
                 #thisMessage = random.choice(userMessages)
                 inputsaso = browser.find_element_by_xpath("//input[contains(@placeholder,'Buscar en Messenger')]")
@@ -88,7 +85,7 @@ if operation:
                 time.sleep(1)
                 keyboard.send('enter')
                 time.sleep(2)
-                keyboard.write("FB tEST,Im sorry XD")
+                keyboard.write(userMessage)
                 time.sleep(1)
                 keyboard.send('enter')
                 time.sleep(userTimeInterval)
