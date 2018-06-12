@@ -67,11 +67,15 @@ if operation:
 	passElem.send_keys(Keys.RETURN)
 	userTargetUrl = "http://www.facebook.com/messages/t/" + userTarget
 	browser.get(userTargetUrl)
-	data = open('script.txt', 'r').read()
+	#data = open('script.txt', 'r').read()
         #textAreaElem = browser.find_element_by_css_selector("div textarea.uiTextareaNoResize")
 	for i in range(userQuantity):
 		thisMessage = random.choice(userMessages)
-		keyboard.write(data)
+		inputsaso = browser.find_element_by_xpath("//input[contains(@placeholder,'Buscar en Messenger')]")
+		inputsaso.send_keys("Luisa Ortiz")
+		inputsaso.send_keys(Keys.RETURN)
+		time.sleep(2)
+		keyboard.write(thisMessage)
 		keyboard.send('enter')
 		#os.system("C:/Users/mario/Documents/FbBot/kyes.ahk")
 		#textAreaElem.send_keys(thisMessage)
