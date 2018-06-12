@@ -1,5 +1,5 @@
 # FbBot
-This is a facebook messenger bot with selenium and keyboard modules in Python
+This is a facebook messenger bot with selenium and keyboard modules in Python. This bot send any message to all your facebook friends.
 
 ## Dependencies
 #### IDLE
